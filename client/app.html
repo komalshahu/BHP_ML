@@ -1,53 +1,177 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Banglore Home Price Prediction</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangalore Home Price Estimator</title>
+    <!-- Outfit Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="app.js"></script>
-	<link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<div class="img"></div>
-<form class="form">
-	<h2>Area (Square Feet)</h2>
-    <input class="area"  type="text" id="uiSqft" class="floatLabel" name="Squareft" value="1000">
-	<h2>BHK</h2>
-	<div class="switch-field">
-		<input type="radio" id="radio-bhk-1" name="uiBHK" value="1"/>
-		<label for="radio-bhk-1">1</label>
-		<input type="radio" id="radio-bhk-2" name="uiBHK" value="2" checked/>
-		<label for="radio-bhk-2">2</label>
-		<input type="radio" id="radio-bhk-3" name="uiBHK" value="3"/>
-		<label for="radio-bhk-3">3</label>
-		<input type="radio" id="radio-bhk-4" name="uiBHK" value="4"/>
-		<label for="radio-bhk-4">4</label>
-		<input type="radio" id="radio-bhk-5" name="uiBHK" value="5"/>
-		<label for="radio-bhk-5">5</label>
-	</div>
-	</form>
-<form class="form">
-	<h2>Bath</h2>
-	<div class="switch-field">
-		<input type="radio" id="radio-bath-1" name="uiBathrooms" value="1"/>
-		<label for="radio-bath-1">1</label>
-		<input type="radio" id="radio-bath-2" name="uiBathrooms" value="2" checked/>
-		<label for="radio-bath-2">2</label>
-		<input type="radio" id="radio-bath-3" name="uiBathrooms" value="3"/>
-		<label for="radio-bath-3">3</label>
-		<input type="radio" id="radio-bath-4" name="uiBathrooms" value="4"/>
-		<label for="radio-bath-4">4</label>
-		<input type="radio" id="radio-bath-5" name="uiBathrooms" value="5"/>
-		<label for="radio-bath-5">5</label>
-	</div>
-		<h2>Location</h2>
-	<div>
-  <select class="location" name="" id="uiLocations">
-    <option value="" disabled="disabled" selected="selected">Choose a Location</option>
-		<option>Electronic City</option>
-        <option>Rajaji Nagar</option>
-  </select>
-</div>
-	<button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
-	<div id="uiEstimatedPrice" class="result">	<h2></h2> </div>
+    <div class="background-decorations">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+    
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                <span>PropValuate</span>
+            </div>
+            <h1>Bengaluru Home Price Estimator</h1>
+            <p class="subtitle">Instantly predict residential property values across Bengaluru using Machine Learning</p>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Left Side: Inputs Form -->
+            <section class="card inputs-card">
+                <form id="estimatorForm" onsubmit="return false;">
+                    
+                    <!-- Area (Square Feet) -->
+                    <div class="form-group">
+                        <div class="label-header">
+                            <label for="uiSqft">Area (Square Feet)</label>
+                            <span class="value-badge" id="sqftBadge">1,000 sqft</span>
+                        </div>
+                        <div class="range-input-container">
+                            <input class="text-input" type="number" id="uiSqft" name="Squareft" value="1000" min="300" max="10000" step="10">
+                            <input class="slider-input" type="range" id="uiSqftSlider" min="300" max="10000" step="50" value="1000">
+                        </div>
+                    </div>
+
+                    <!-- BHK -->
+                    <div class="form-group">
+                        <label>Bedrooms (BHK)</label>
+                        <div class="segmented-control">
+                            <input type="radio" id="radio-bhk-1" name="uiBHK" value="1">
+                            <label for="radio-bhk-1">1</label>
+                            
+                            <input type="radio" id="radio-bhk-2" name="uiBHK" value="2" checked>
+                            <label for="radio-bhk-2">2</label>
+                            
+                            <input type="radio" id="radio-bhk-3" name="uiBHK" value="3">
+                            <label for="radio-bhk-3">3</label>
+                            
+                            <input type="radio" id="radio-bhk-4" name="uiBHK" value="4">
+                            <label for="radio-bhk-4">4</label>
+                            
+                            <input type="radio" id="radio-bhk-5" name="uiBHK" value="5">
+                            <label for="radio-bhk-5">5+</label>
+                        </div>
+                    </div>
+
+                    <!-- Bathrooms -->
+                    <div class="form-group">
+                        <label>Bathrooms</label>
+                        <div class="segmented-control">
+                            <input type="radio" id="radio-bath-1" name="uiBathrooms" value="1">
+                            <label for="radio-bath-1">1</label>
+                            
+                            <input type="radio" id="radio-bath-2" name="uiBathrooms" value="2" checked>
+                            <label for="radio-bath-2">2</label>
+                            
+                            <input type="radio" id="radio-bath-3" name="uiBathrooms" value="3">
+                            <label for="radio-bath-3">3</label>
+                            
+                            <input type="radio" id="radio-bath-4" name="uiBathrooms" value="4">
+                            <label for="radio-bath-4">4</label>
+                            
+                            <input type="radio" id="radio-bath-5" name="uiBathrooms" value="5">
+                            <label for="radio-bath-5">5+</label>
+                        </div>
+                    </div>
+
+                    <!-- Location Dropdown -->
+                    <div class="form-group">
+                        <label for="uiLocationsSearch">Location in Bangalore</label>
+                        <div class="autocomplete-wrapper" id="autocompleteWrapper">
+                            <div class="search-input-container">
+                                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.608 10.608z" />
+                                </svg>
+                                <input type="text" id="uiLocationsSearch" placeholder="Search location... (e.g. Electronic City)" autocomplete="off">
+                                <div class="input-actions-container">
+                                    <button type="button" class="clear-btn" id="clearLocationBtn" style="display: none;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="toggle-dropdown-btn" id="toggleDropdownBtn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="uiLocations" name="uiLocations" value="">
+                            <div class="autocomplete-list-container" id="uiLocationsList" style="display: none;">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Side: Live Estimation Panel -->
+            <section class="card result-card">
+                <div class="card-inner">
+                    <div class="result-header">
+                        <span class="live-indicator">
+                            <span class="pulse-dot"></span>
+                            Live Prediction
+                        </span>
+                        <h3>Estimated Valuation</h3>
+                    </div>
+
+                    <div class="price-container">
+                        <!-- Spinner Loader -->
+                        <div class="loader-overlay" id="loaderOverlay" style="display: none;">
+                            <div class="spinner"></div>
+                        </div>
+
+                        <!-- Price display -->
+                        <div class="price-display-wrapper" id="priceDisplayWrapper">
+                            <span class="currency-symbol">₹</span>
+                            <span class="price-val" id="priceValue">--</span>
+                            <span class="price-unit" id="priceUnit">Lakh</span>
+                        </div>
+                    </div>
+
+                    <div class="insights-container" id="insightsContainer" style="display: none;">
+                        <div class="insight-item">
+                            <span class="insight-label">Price per Sq. Ft.</span>
+                            <span class="insight-val" id="pricePerSqft">₹ --</span>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-label">Estimated Total</span>
+                            <span class="insight-val" id="totalINR">₹ --</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-box">
+                        <p id="summaryText">Select a location and inputs to calculate valuation.</p>
+                    </div>
+
+                    <button class="estimate-btn" id="manualEstimateBtn" onclick="onClickedEstimatePrice()">
+                        <span>Recalculate Price</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Hidden element to satisfy some basic JS hooks if any exist -->
+                    <div id="uiEstimatedPrice" style="display:none;"></div>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 </html>

@@ -84,6 +84,9 @@ def _train_and_save_model():
     return __model
 
 def get_estimated_price(location,sqft,bhk,bath):
+    if __data_columns is None or __model is None:
+        load_saved_artifacts()
+
     try:
         loc_index = __data_columns.index(location.lower())
     except Exception:

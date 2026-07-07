@@ -2,6 +2,13 @@ import os
 from flask import Flask, request, jsonify, send_from_directory
 import util
 
+util.load_saved_artifacts()
+
+try:
+    from waitress import serve
+except ImportError:
+    serve = None
+
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), '..', 'client'), static_url_path='')
 
 @app.route('/')
@@ -38,6 +45,11 @@ def api_predict_home_price():
     return predict_home_price()
 
 if __name__ == "__main__":
-    print("Starting Python Flask Server For Home Price Prediction...")
-    util.load_saved_artifacts()
-    app.run()
+    port = int(os.environ.get("PORT", 10000))
+
+    if serve is not None:
+        print('Starting waitress production WSGI server on 0.0.0.0:%d' % port)
+        serve(app, host='0.0.0.0', port=port)
+    else:
+        print('waitress is not installed; falling back to Flask development server.')
+        app.run(host='0.0.0.0', port=port)
